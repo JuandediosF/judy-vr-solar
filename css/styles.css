@@ -1,0 +1,61 @@
+:root {
+    --fondo-principal: #090d16;
+    --letras-principales: #ffffff;
+    --letras-especiales: #ff7a00;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: var(--fondo-principal);
+    color: #ffffff;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 40px;
+    border-bottom: 3px solid #172033;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navinicio {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.navinicio span {
+    color: var(--letras-especiales);
+}
+
+.navlinks {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.navlinks a {
+    color: var(--letras-principales);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.navlinks a:hover {
+    color: aqua;
+}
+
+.navaccion a {
+    color: var(--letras-principales);
+    font-size: 20px;
+    text-decoration: none;
+}
