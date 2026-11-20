@@ -1,0 +1,11 @@
+description = "Sincroniza y valida las gems del proyecto: skills de Antigravity, comandos /judy:* de Gemini CLI y Gems de Gemini"
+prompt = """
+Ejecuta la skill `gem-sync` de JuDy Simulator.
+
+1. `python tools/judy_gem_sync.py`
+2. Si faltan derivados, `python tools/judy_gem_sync.py --write` (nunca --force salvo petición explícita).
+3. `python tools/judy_audit.py --strict` para confirmar que no quedan códigos GEM-*.
+4. Verifica que `.agents/` esté versionado y excluido del FTP, y que `.gemini/commands/` no esté ignorado por Git.
+
+Reporta el mapa de plataformas y el estado SINCRONIZADO o PENDIENTE.
+"""

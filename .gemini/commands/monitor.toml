@@ -1,0 +1,8 @@
+description = "Audita la URL de producción en InfinityFree usando curl para detectar códigos HTTP != 200, errores PHP o fallos de conexión a MySQL."
+prompt = """
+Ejecuta una auditoría mediante curl a la URL de producción configurada (o la URL de InfinityFree provista).
+Verifica:
+1. Que el código de estado HTTP sea exactamente 200 OK.
+2. Que la respuesta no contenga mensajes de error de PHP (como "Notice", "Warning", "Fatal error", "Parse error") ni fallos de conexión a MySQL ("mysqli_sql_exception", "Access denied", "Connection refused").
+Reporta cualquier anomalía detectada.
+"""

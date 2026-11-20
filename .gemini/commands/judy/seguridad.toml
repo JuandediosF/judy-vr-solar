@@ -1,0 +1,11 @@
+description = "Revisión de seguridad PHP: CSRF, SQLi, XSS, secretos y abuso de correo en JuDy Simulator"
+prompt = """
+Ejecuta la skill `seguridad-php` de JuDy Simulator sobre {{args}}
+(si no se especifica archivo, revisa todos los scripts PHP que no sean config).
+
+1. `python tools/judy_audit.py --json` y filtra SEC-* y PHP-006.
+2. Aplica el checklist de `.agents/skills/seguridad-php/SKILL.md`.
+3. Entrega CRÍTICO / MEDIO / OK y el veredicto APROBAR o CAMBIOS REQUERIDOS.
+
+Prohibido: ejecutar DELETE/DROP en producción, enviar correos reales o mostrar secretos.
+"""

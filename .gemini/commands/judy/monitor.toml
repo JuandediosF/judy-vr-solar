@@ -1,0 +1,12 @@
+description = "Auditoría HTTP post-despliegue de los 6 endpoints públicos de JuDy Simulator"
+prompt = """
+Ejecuta la skill `prod-monitor` de JuDy Simulator.
+
+URL objetivo: {{args}}
+Si el parámetro está vacío, usa JUDY_URL y después `APP_URL` de `config.php`.
+Si la URL resulta ser localhost, avisa: es desarrollo, no producción.
+
+Ejecuta: `python tools/judy_monitor.py --url "<URL>"`
+Diagnostica códigos != 200, errores PHP y errores MySQL según
+`.agents/skills/prod-monitor/SKILL.md`. No imprimas tokens ni correos de usuarios.
+"""

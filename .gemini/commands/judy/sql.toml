@@ -1,0 +1,11 @@
+description = "Valida JuDyb.sql y las consultas PHP para InfinityFree (tablas en minúsculas, sin CREATE DATABASE/USE, utf8mb4, InnoDB)"
+prompt = """
+Ejecuta la skill `infinity-sql` de JuDy Simulator.
+
+1. `python tools/judy_audit.py --json`, filtra los códigos SQL-*.
+2. Revisa `JuDyb.sql` según `.agents/skills/infinity-sql/SKILL.md`.
+3. Revisa que las consultas PHP usen `?` + `bind_param` y tablas `usuarios`/`avances_vr`.
+4. Reporta compatibilidad COMPATIBLE o INCOMPATIBLE con los cambios aplicados.
+
+No ejecutes DROP ni modifiques credenciales sin confirmación explícita.
+"""

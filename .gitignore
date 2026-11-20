@@ -6,4 +6,8 @@ config.php
 Thumbs.db
 .vscode/
 *.log
-.gemini/
+
+# Gemini CLI: se versionan solo los comandos compartidos; el resto es local.
+.gemini/*
+!.gemini/commands/
+!.gemini/commands/**

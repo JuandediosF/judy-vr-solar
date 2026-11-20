@@ -1,0 +1,12 @@
+description = "Auditoría previa al despliegue de JuDy Simulator en InfinityFree (BOM, secretos, SQL, CSRF, FTP, php -l)"
+prompt = """
+Ejecuta la skill `predeploy-audit` de JuDy Simulator.
+
+1. Ejecuta desde la raíz: `python tools/judy_audit.py --strict {{args}}`
+2. Corrige cada ERROR y decide el destino de cada WARN (corrección o excepción documentada).
+3. Si PHP no está disponible, indica que `php -l` queda pendiente.
+4. Vuelve a ejecutar el auditor y reporta solo con 0 ERROR.
+
+Usa la plantilla de salida de `.agents/skills/predeploy-audit/SKILL.md`.
+Nunca muestres credenciales; usa ****.
+"""

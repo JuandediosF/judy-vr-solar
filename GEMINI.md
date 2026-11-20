@@ -70,3 +70,13 @@ Este documento establece las directrices obligatorias de arquitectura, configura
 ## 7. Cambios de estado y formularios
 - Las acciones que modifican datos (aprobar usuarios, asignar roles) deben usar `POST` con token CSRF, nunca `GET`.
 - Los enlaces de aprobación por correo deben tener expiración y no permitir elegir jerarquía con un simple clic.
+- Las excepciones legítimas (p. ej. registro público sin sesión) se documentan con `// csrf-exception: <motivo>` y el auditor las excluye.
+
+---
+
+## 8. Ecosistema de gems y herramientas compartidas
+- Las reglas operativas para todos los agentes están en `.agents/rules/judy-proyecto.md`; las skills canónicas en `.agents/skills/` y los agentes dedicados en `.agents/agents/`.
+- Comandos de Gemini CLI: `/judy:audit`, `/judy:monitor`, `/judy:seguridad`, `/judy:sql`, `/judy:sync` (definidos en `.gemini/commands/judy/`).
+- Antes de cualquier cambio: `python tools/judy_audit.py --strict`. Después de cada despliegue: `python tools/judy_monitor.py --url <URL_PUBLICA>`.
+- Las Gems de la app Gemini se generan desde las skills con `python tools/judy_gem_sync.py --write`; se edita la skill, nunca el derivado.
+- Guía completa: `HERRAMIENTAS.md`. Ninguna herramienta imprime credenciales; usa `****`.

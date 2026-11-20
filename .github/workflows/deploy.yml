@@ -31,6 +31,9 @@ jobs:
             **/.git*/**
             .github/**
             .gemini/**
+            .agents/**
+            tools/**
+            gems/**
             **/*.sql
             **/*.md
             config.php

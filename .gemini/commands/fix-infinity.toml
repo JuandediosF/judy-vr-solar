@@ -1,0 +1,8 @@
+description = "Corrige y adapta todos los archivos PHP y JuDyb.sql para el entorno de producción Linux en InfinityFree, centralizando la conexión en config.php y validando rutas y nombres de tablas en minúsculas."
+prompt = """
+Revisa y ajusta el código del proyecto para asegurar plena compatibilidad con InfinityFree (Linux):
+1. Verificar que todas las consultas SQL y volcados en JuDyb.sql utilicen nombres de tablas en minúsculas (`usuarios`, `avances_vr`).
+2. Comprobar que todos los scripts PHP requieran obligatoriamente `require_once 'config.php';` y utilicen las constantes de conexión (`DB_HOST`, `DB_USER`, `DB_PASS`, `DB_NAME`).
+3. Asegurar que las rutas de inclusión (`include`, `require`, `header`) respeten estrictamente las mayúsculas y minúsculas (sensibilidad a mayúsculas de Linux).
+4. Configurar `display_errors = 0` en producción o asegurar el manejo silencioso/seguro de errores.
+"""

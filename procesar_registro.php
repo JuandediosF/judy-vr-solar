@@ -13,6 +13,7 @@ require_once __DIR__ . '/assets/lib/PHPMailer/PHPMailer.php';
 require_once __DIR__ . '/assets/lib/PHPMailer/SMTP.php';
 
 // Solo acepta peticiones POST
+// csrf-exception: registro público sin sesión que proteger; la aprobación posterior sí valida token.
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: registro.php');
     exit();
