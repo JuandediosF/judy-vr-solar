@@ -4,17 +4,14 @@
 //  Solo accesible para usuarios con rol 'gerencia'.
 // ============================================================
 session_start();
-require_once 'config.php';
+require_once __DIR__ . '/config.php';
 
 if (!isset($_SESSION['id_usuario']) || $_SESSION['rol'] !== 'gerencia') {
     header('Location: login.php');
     exit();
 }
 
-$conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-if ($conexion->connect_error) {
-    die('Error de conexión a la base de datos.');
-}
+// $conexion global se inicializa en config.php
 
 // Aprobar usuario desde el panel web (sin enlace de correo)
 if (isset($_GET['aprobar'], $_GET['rol'])) {
@@ -58,7 +55,7 @@ $resultado_todos      = $conexion->query("SELECT * FROM usuarios ORDER BY estatu
 </head>
 <body>
 
-<?php $nav_tipo = 'panel'; include 'navbar.php'; ?>
+<?php $nav_tipo = 'panel'; include __DIR__ . '/navbar.php'; ?>
 
 <div class="container">
     <h1>Gestión y Autorización de Operadores</h1>

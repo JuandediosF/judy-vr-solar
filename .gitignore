@@ -1,6 +1,3 @@
-# Dependencias de PHP instaladas manualmente
-assets/lib/PHPMailer/
-
 # Archivo con credenciales sensibles — NUNCA subir al repositorio
 config.php
 

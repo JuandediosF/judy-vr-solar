@@ -3,14 +3,14 @@
 //  procesar_contacto.php — Envía el formulario de contacto
 //  al administrador vía SMTP Gmail (PHPMailer).
 // ============================================================
-require_once 'config.php';
+require_once __DIR__ . '/config.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'assets/lib/PHPMailer/Exception.php';
-require 'assets/lib/PHPMailer/PHPMailer.php';
-require 'assets/lib/PHPMailer/SMTP.php';
+require_once __DIR__ . '/assets/lib/PHPMailer/Exception.php';
+require_once __DIR__ . '/assets/lib/PHPMailer/PHPMailer.php';
+require_once __DIR__ . '/assets/lib/PHPMailer/SMTP.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: contacto.php');

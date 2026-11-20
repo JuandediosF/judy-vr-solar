@@ -4,7 +4,7 @@
 //  Valida el token aleatorio almacenado en la BD para evitar
 //  autoaprobaciones o manipulación de roles.
 // ============================================================
-require_once 'config.php';
+require_once __DIR__ . '/config.php';
 
 $matricula      = $_GET['m'] ?? '';
 $token_recibido = $_GET['t'] ?? '';
@@ -22,10 +22,7 @@ if ($rol_asignado !== 'empleado' && $rol_asignado !== 'gerencia') {
     exit();
 }
 
-$conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-if ($conexion->connect_error) {
-    die('Error de conexión a la base de datos.');
-}
+// $conexion global se inicializa en config.php
 
 // Buscar al usuario pendiente con esa matrícula
 $sql  = 'SELECT id_usuario, token_aprobacion, estatus FROM usuarios WHERE matricula = ? LIMIT 1';
@@ -64,7 +61,6 @@ if ($stmt2->affected_rows > 0) {
 }
 
 $stmt2->close();
-$conexion->close();
 
 // ============================================================
 //  Función auxiliar: muestra un mensaje HTML simple y limpio

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 ?>
 <!DOCTYPE html>
@@ -34,7 +34,7 @@ if (isset($_SESSION['id_usuario'])) {
     exit();
 }
 $nav_tipo = 'auth';
-include 'navbar.php';
+include __DIR__ . '/navbar.php';
 ?>
 
 <div class="login-container">

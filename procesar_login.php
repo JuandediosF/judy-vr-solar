@@ -3,7 +3,7 @@
 //  procesar_login.php — Valida credenciales y abre sesión
 // ============================================================
 session_start();
-require_once 'config.php';
+require_once __DIR__ . '/config.php';
 
 // Solo acepta peticiones POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -19,11 +19,7 @@ if ($matricula === '' || $password === '') {
     exit();
 }
 
-$conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-if ($conexion->connect_error) {
-    die('Error de conexión a la base de datos.');
-}
-
+// $conexion se inicializa de forma centralizada en config.php
 $sql  = 'SELECT id_usuario, nombre_completo, rol, password, estatus
            FROM usuarios
           WHERE matricula = ?
@@ -55,6 +51,6 @@ if ($resultado->num_rows === 1) {
     }
 }
 
-// Credenciales incorrectas (mismo mensaje para evitar enumeración de usuarios)
+// Credenciales incorrectas
 header('Location: login.php?error=1');
 exit();

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 ?>
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ session_start();
 
 <?php
 $nav_tipo = 'auth';
-include 'navbar.php';
+include __DIR__ . '/navbar.php';
 ?>
 
 <div class="login-container">

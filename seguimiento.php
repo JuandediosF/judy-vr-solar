@@ -3,7 +3,7 @@
 //  seguimiento.php — Panel principal del usuario autenticado
 // ============================================================
 session_start();
-require_once 'config.php';
+require_once __DIR__ . '/config.php';
 
 // Solo usuarios con sesión activa
 if (!isset($_SESSION['id_usuario'])) {
@@ -11,14 +11,11 @@ if (!isset($_SESSION['id_usuario'])) {
     exit();
 }
 
-$id_usuario    = $_SESSION['id_usuario'];
+$id_usuario     = $_SESSION['id_usuario'];
 $nombre_usuario = $_SESSION['nombre'];
 $rol_usuario    = $_SESSION['rol'];
 
-$conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-if ($conexion->connect_error) {
-    die('Error de conexión a la base de datos.');
-}
+// $conexion global se inicializa en config.php
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -42,7 +39,7 @@ if ($conexion->connect_error) {
 </head>
 <body>
 
-<?php $nav_tipo = 'panel'; include 'navbar.php'; ?>
+<?php $nav_tipo = 'panel'; include __DIR__ . '/navbar.php'; ?>
 
 <div style="padding:40px 5%; max-width:1200px; margin:0 auto; min-height:calc(100vh - 80px);">
     <h1 style="font-size:32px;">Panel de Operaciones</h1>

@@ -3,14 +3,14 @@
 //  procesar_registro.php — Crea un nuevo usuario pendiente
 //  y notifica al administrador por correo con botones de rol.
 // ============================================================
-require_once 'config.php';
+require_once __DIR__ . '/config.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'assets/lib/PHPMailer/Exception.php';
-require 'assets/lib/PHPMailer/PHPMailer.php';
-require 'assets/lib/PHPMailer/SMTP.php';
+require_once __DIR__ . '/assets/lib/PHPMailer/Exception.php';
+require_once __DIR__ . '/assets/lib/PHPMailer/PHPMailer.php';
+require_once __DIR__ . '/assets/lib/PHPMailer/SMTP.php';
 
 // Solo acepta peticiones POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -38,11 +38,7 @@ $estatus        = 'pendiente';
 // Token aleatorio seguro para el enlace de aprobación por correo
 $token          = bin2hex(random_bytes(32));
 
-$conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-if ($conexion->connect_error) {
-    die('Error de conexión a la base de datos.');
-}
-
+// $conexion se inicializa en config.php
 $sql  = 'INSERT INTO usuarios
             (matricula, nombre_completo, email, telefono, password, rol, estatus, token_aprobacion)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
@@ -111,14 +107,13 @@ try {
         header('Location: registro.php?error=duplicado');
         exit();
     }
-    die('Error en la base de datos: ' . htmlspecialchars($e->getMessage()));
+    error_log('DB Error: ' . $e->getMessage());
+    die('Error en el registro.');
 } catch (Exception $e) {
-    // Si el correo falla, el usuario ya quedó registrado; lo informamos sin exponer detalles internos.
     error_log('PHPMailer Error: ' . $mail->ErrorInfo);
 }
 
 $stmt->close();
-$conexion->close();
 
 header('Location: login.php?registro=exito');
 exit();

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 ?>
 <!DOCTYPE html>
@@ -24,7 +24,7 @@ session_start();
 </head>
 <body>
 
-<?php $nav_tipo = 'publica'; include 'navbar.php'; ?>
+<?php $nav_tipo = 'publica'; include __DIR__ . '/navbar.php'; ?>
 
 <div class="login-container">
     <div class="login-box">
