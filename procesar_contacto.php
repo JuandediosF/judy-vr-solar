@@ -22,10 +22,18 @@ $nombre  = trim($_POST['nombre']  ?? '');
 $correo  = trim($_POST['correo']  ?? '');
 $mensaje = trim($_POST['mensaje'] ?? '');
 
-if ($nombre === '' || $correo === '' || $mensaje === '') {
+if ($nombre === '' || $correo === '' || $mensaje === '' || !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
     header('Location: contacto.php?error=campos');
     exit();
 }
+
+// Límite simple de un mensaje por minuto por sesión
+$ahora = time();
+if (isset($_SESSION['ultimo_contacto']) && $ahora - (int)$_SESSION['ultimo_contacto'] < 60) {
+    header('Location: contacto.php?error=limite');
+    exit();
+}
+$_SESSION['ultimo_contacto'] = $ahora;
 
 $mail = new PHPMailer(true);
 try {

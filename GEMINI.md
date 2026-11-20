@@ -63,7 +63,7 @@ Este documento establece las directrices obligatorias de arquitectura, configura
 
 ## 6. Codificación y secretos
 - Todos los archivos `.php` deben guardarse en **UTF-8 sin BOM**. Un BOM antes de `<?php` envía bytes antes de las cabeceras HTTP y rompe `header('Location: ...')` y `session_start()`.
-- Ninguna credencial, contraseña de aplicación ni token real debe escribirse en chats, issues, respuestas de agentes ni repositorios. Usa `config.example.php` como plantilla y mantén `config.php` solo en el servidor.
+- Ninguna credencial, contraseña de aplicación ni token real debe escribirse en chats, issues, respuestas de agentes ni repositorios. Usa `config.sample.php` como plantilla y mantén `config.php` solo en el servidor.
 
 ---
 
