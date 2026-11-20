@@ -11,7 +11,7 @@ equipo con **Orca** pueda trabajar con las mismas reglas, skills y comandos.
 - Agentes y reglas: `.agents/agents/`, `.agents/rules/`.
 - Comandos derivados para Gemini CLI: `.gemini/commands/judy/*.toml` y `.gemini/commands/*.toml`.
 - Gems para la app Gemini en `gems/`.
-- Scripts deterministas en `tools/`: `judy_gem_sync.py`, `judy_audit.py`, `judy_monitor.py`.
+- Scripts deterministas en `tools/`: `judy_gem_sync.py`, `judy_audit.py`, `judy_monitor.py` y `build_portable_zip.py`.
 - Workflow de despliegue en `.github/workflows/deploy.yml`.
 - Historial Git (`.git`), con `origin` apuntando a `github.com/JuandediosF/judy-vr-solar`.
 
@@ -39,6 +39,7 @@ O manualmente:
 ```bash
 python tools/judy_gem_sync.py       # comprueba skills -> comandos -> Gems
 python tools/judy_audit.py --strict # auditoría previa
+python tools/build_portable_zip.py  # reconstruye el ZIP sin secretos
 ```
 
 Resultado esperado: `Skills válidas: 5`, `Estado: SINCRONIZADO` y

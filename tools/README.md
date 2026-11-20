@@ -8,6 +8,7 @@ para no repetir comprobaciones manuales.
 | `judy_audit.py` | Pre-deploy: BOM/UTF-8, secretos, SQL InfinityFree, `config.php`, CSRF, excludes FTP, `php -l` si está disponible | `python tools/judy_audit.py --strict` |
 | `judy_monitor.py` | Auditoría HTTP tras el despliegue: códigos, errores PHP y MySQL | `python tools/judy_monitor.py --url https://dominio.infinityfreeapp.com` |
 | `judy_gem_sync.py` | Sincroniza `.agents/skills/` → comandos Gemini CLI y Gems de Gemini | `python tools/judy_gem_sync.py --write` |
+| `build_portable_zip.py` | Genera el ZIP portable y verifica que no incluya `config.php` ni credenciales | `python tools/build_portable_zip.py` |
 
 Convenciones:
 
