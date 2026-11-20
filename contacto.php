@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 session_start();
 ?>
 <!DOCTYPE html>
@@ -37,6 +37,14 @@ session_start();
         <?php elseif (isset($_GET['error']) && $_GET['error'] === 'envio'): ?>
             <p style="color:#dc2626; font-weight:bold; text-align:center; margin-bottom:20px;">
                 ❌ Hubo un error al enviar tu mensaje. Inténtalo de nuevo más tarde.
+            </p>
+        <?php elseif (isset($_GET['error']) && $_GET['error'] === 'campos'): ?>
+            <p style="color:#dc2626; font-weight:bold; text-align:center; margin-bottom:20px;">
+                Por favor completa todos los campos.
+            </p>
+        <?php elseif (isset($_GET['error']) && $_GET['error'] === 'limite'): ?>
+            <p style="color:#f59e0b; font-weight:bold; text-align:center; margin-bottom:20px;">
+                Espera unos segundos antes de enviar otro mensaje.
             </p>
         <?php else: ?>
             <p style="text-align:center; color:var(--letras-secundarias); margin-bottom:30px;">

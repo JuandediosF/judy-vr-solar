@@ -4,6 +4,7 @@
 //  al administrador vía SMTP Gmail (PHPMailer).
 // ============================================================
 require_once __DIR__ . '/config.php';
+session_start();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

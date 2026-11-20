@@ -13,18 +13,44 @@ if (!isset($_SESSION['id_usuario']) || $_SESSION['rol'] !== 'gerencia') {
 
 // $conexion global se inicializa en config.php
 
-// Aprobar usuario desde el panel web (sin enlace de correo)
-if (isset($_GET['aprobar'], $_GET['rol'])) {
-    $id_aprobar = intval($_GET['aprobar']);
-    $nuevo_rol  = $_GET['rol'];
+// Token CSRF para las acciones del panel
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+$csrf_token = $_SESSION['csrf_token'];
 
-    if ($nuevo_rol === 'empleado' || $nuevo_rol === 'gerencia') {
-        $sql_ap = "UPDATE usuarios SET estatus = 'aprobado', rol = ?, token_aprobacion = NULL WHERE id_usuario = ?";
+// Aprobar usuario desde el panel web (POST + CSRF, nunca por GET)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aprobar'], $_POST['rol'], $_POST['csrf_token'])) {
+    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        http_response_code(403);
+        die('Token CSRF inválido.');
+    }
+
+    $id_aprobar = (int)$_POST['aprobar'];
+    $nuevo_rol  = $_POST['rol'];
+
+    if ($nuevo_rol !== 'empleado' && $nuevo_rol !== 'gerencia') {
+        header('Location: gestionar_usuarios.php?error=rol');
+        exit();
+    }
+
+    // Solo se pueden aprobar solicitudes pendientes
+    $check = $conexion->prepare("SELECT estatus FROM usuarios WHERE id_usuario = ? LIMIT 1");
+    $check->bind_param('i', $id_aprobar);
+    $check->execute();
+    $fila = $check->get_result()->fetch_assoc();
+    $check->close();
+
+    if ($fila && $fila['estatus'] === 'pendiente') {
+        $sql_ap = "UPDATE usuarios
+                      SET estatus = 'aprobado', rol = ?, token_aprobacion = NULL, token_expira_en = NULL
+                    WHERE id_usuario = ? AND estatus = 'pendiente'";
         $stmt   = $conexion->prepare($sql_ap);
         $stmt->bind_param('si', $nuevo_rol, $id_aprobar);
         $stmt->execute();
         $stmt->close();
     }
+
     header('Location: gestionar_usuarios.php?ok=1');
     exit();
 }
@@ -47,10 +73,11 @@ $resultado_todos      = $conexion->query("SELECT * FROM usuarios ORDER BY estatu
         .data-table th,
         .data-table td { padding:12px; text-align:left; border-bottom:1px solid var(--borde-color); }
         .btn-empleado { padding:6px 12px; background:#22c55e; color:#fff; text-decoration:none;
-                        border-radius:4px; font-size:13px; font-weight:bold; margin-right:5px;
-                        display:inline-block; }
+                        border:none; border-radius:4px; font-size:13px; font-weight:bold;
+                        margin-right:5px; display:inline-block; cursor:pointer; }
         .btn-gerente  { padding:6px 12px; background:#f37021; color:#fff; text-decoration:none;
-                        border-radius:4px; font-size:13px; font-weight:bold; display:inline-block; }
+                        border:none; border-radius:4px; font-size:13px; font-weight:bold;
+                        display:inline-block; cursor:pointer; }
     </style>
 </head>
 <body>
@@ -65,6 +92,8 @@ $resultado_todos      = $conexion->query("SELECT * FROM usuarios ORDER BY estatu
 
     <?php if (isset($_GET['ok'])): ?>
         <p style="color:#22c55e; font-weight:bold; margin-bottom:20px;">✅ Usuario aprobado correctamente.</p>
+    <?php elseif (isset($_GET['error']) && $_GET['error'] === 'rol'): ?>
+        <p style="color:#dc2626; font-weight:bold; margin-bottom:20px;">El rol especificado no es válido.</p>
     <?php endif; ?>
 
     <!-- Solicitudes pendientes -->
@@ -84,10 +113,12 @@ $resultado_todos      = $conexion->query("SELECT * FROM usuarios ORDER BY estatu
                         <td><?= htmlspecialchars($row['email'] ?? '—') ?></td>
                         <td><?= htmlspecialchars($row['telefono'] ?? '—') ?></td>
                         <td style="min-width:250px;">
-                            <a href="gestionar_usuarios.php?aprobar=<?= (int)$row['id_usuario'] ?>&rol=empleado"
-                               class="btn-empleado">✅ Empleado</a>
-                            <a href="gestionar_usuarios.php?aprobar=<?= (int)$row['id_usuario'] ?>&rol=gerencia"
-                               class="btn-gerente">🔑 Gerente</a>
+                            <form method="POST" action="gestionar_usuarios.php" style="display:inline;">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8') ?>">
+                                <input type="hidden" name="aprobar" value="<?= (int)$row['id_usuario'] ?>">
+                                <button type="submit" name="rol" value="empleado" class="btn-empleado">✅ Empleado</button>
+                                <button type="submit" name="rol" value="gerencia" class="btn-gerente">🔑 Gerente</button>
+                            </form>
                         </td>
                     </tr>
                 <?php endwhile; ?>

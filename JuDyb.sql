@@ -23,6 +23,7 @@ CREATE TABLE `usuarios` (
   `rol`              VARCHAR(20)  NOT NULL DEFAULT 'por_asignar',
   `estatus`          VARCHAR(20)  NOT NULL DEFAULT 'pendiente',
   `token_aprobacion` VARCHAR(64)  DEFAULT NULL COMMENT 'Token aleatorio para link de aprobación por correo',
+  `token_expira_en`  DATETIME     DEFAULT NULL COMMENT 'Fecha de expiración del enlace de aprobación',
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `uq_matricula` (`matricula`)
 ) ENGINE=InnoDB
@@ -33,12 +34,12 @@ CREATE TABLE `usuarios` (
 -- Usuarios de prueba
 -- Contraseña de GER-001 y EMP-001: 12345 (hasheada con bcrypt)
 INSERT INTO `usuarios`
-  (`id_usuario`, `matricula`, `nombre_completo`, `email`, `telefono`, `password`, `rol`, `estatus`, `token_aprobacion`)
+  (`id_usuario`, `matricula`, `nombre_completo`, `email`, `telefono`, `password`, `rol`, `estatus`, `token_aprobacion`, `token_expira_en`)
 VALUES
-  (1, 'GER-001', 'Dilan Rodríguez', NULL, NULL, '$2y$10$hKbh6Fx2Ysb4fWEQN6X9AefLLe9giUQG7.zftDxIen46XJ1yBrVmO', 'gerencia', 'aprobado', NULL),
-  (2, 'EMP-001', 'Carlos Rivera', NULL, NULL, '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'empleado', 'aprobado', NULL),
-  (3, '142510685', 'Dilan Israel Rodriguez Cano', 'dilan.cano2025@gmail.com', '4691214870', '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'por_asignar', 'pendiente', '2ecb1a0af427c3c4b6ecc8e2ee6892eb'),
-  (4, '142565415', 'Usuario Prueba 2', 'dilan.cano2028@gmail.com', '4691214870', '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'por_asignar', 'pendiente', '375be34e8063bdd0a5d7d3c727228a90');
+  (1, 'GER-001', 'Dilan Rodríguez', NULL, NULL, '$2y$10$hKbh6Fx2Ysb4fWEQN6X9AefLLe9giUQG7.zftDxIen46XJ1yBrVmO', 'gerencia', 'aprobado', NULL, NULL),
+  (2, 'EMP-001', 'Carlos Rivera', NULL, NULL, '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'empleado', 'aprobado', NULL, NULL),
+  (3, '142510685', 'Dilan Israel Rodriguez Cano', 'dilan.cano2025@gmail.com', '4691214870', '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'por_asignar', 'pendiente', NULL, NULL),
+  (4, '142565415', 'Usuario Prueba 2', 'dilan.cano2028@gmail.com', '4691214870', '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'por_asignar', 'pendiente', NULL, NULL);
 
 -- -----------------------------------------------------------
 -- Tabla: avances_vr

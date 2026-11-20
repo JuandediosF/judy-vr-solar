@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 session_start();
 ?>
 <!DOCTYPE html>
@@ -43,6 +43,10 @@ include __DIR__ . '/navbar.php';
         <?php elseif ($error === 'campos'): ?>
             <p style="color:#dc2626; font-size:14px; margin-bottom:15px; font-weight:bold; text-align:center;">
                 Por favor completa todos los campos requeridos.
+            </p>
+        <?php elseif ($error === 'correo'): ?>
+            <p style="color:#dc2626; font-size:14px; margin-bottom:15px; font-weight:bold; text-align:center;">
+                El correo electrónico no tiene un formato válido.
             </p>
         <?php endif; ?>
 

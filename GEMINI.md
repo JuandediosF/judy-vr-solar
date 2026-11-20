@@ -58,3 +58,15 @@ Este documento establece las directrices obligatorias de arquitectura, configura
   include __DIR__ . '/navbar.php';
   ```
 - **Rutas públicas y enlaces:** Usar la constante `APP_URL` para enlaces absolutos y recursos estáticos cuando sea necesario.
+
+---
+
+## 6. Codificación y secretos
+- Todos los archivos `.php` deben guardarse en **UTF-8 sin BOM**. Un BOM antes de `<?php` envía bytes antes de las cabeceras HTTP y rompe `header('Location: ...')` y `session_start()`.
+- Ninguna credencial, contraseña de aplicación ni token real debe escribirse en chats, issues, respuestas de agentes ni repositorios. Usa `config.example.php` como plantilla y mantén `config.php` solo en el servidor.
+
+---
+
+## 7. Cambios de estado y formularios
+- Las acciones que modifican datos (aprobar usuarios, asignar roles) deben usar `POST` con token CSRF, nunca `GET`.
+- Los enlaces de aprobación por correo deben tener expiración y no permitir elegir jerarquía con un simple clic.

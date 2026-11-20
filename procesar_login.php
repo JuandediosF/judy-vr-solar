@@ -35,7 +35,8 @@ if ($resultado->num_rows === 1) {
     // password_verify compara la contraseña con el hash bcrypt
     if (password_verify($password, $fila['password'])) {
 
-        if ($fila['estatus'] === 'pendiente') {
+        // Solo los usuarios aprobados pueden entrar (cualquier otro estatus se bloquea)
+        if ($fila['estatus'] !== 'aprobado') {
             header('Location: login.php?error=pendiente');
             exit();
         }

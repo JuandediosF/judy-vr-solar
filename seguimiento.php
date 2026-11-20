@@ -11,9 +11,9 @@ if (!isset($_SESSION['id_usuario'])) {
     exit();
 }
 
-$id_usuario     = $_SESSION['id_usuario'];
-$nombre_usuario = $_SESSION['nombre'];
-$rol_usuario    = $_SESSION['rol'];
+$id_usuario     = (int)$_SESSION['id_usuario'];
+$nombre_usuario = $_SESSION['nombre'] ?? 'Usuario';
+$rol_usuario    = $_SESSION['rol'] ?? 'sin_rol';
 
 // $conexion global se inicializa en config.php
 ?>

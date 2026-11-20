@@ -1,7 +1,7 @@
 <?php
 // ============================================================
 //  procesar_registro.php — Crea un nuevo usuario pendiente
-//  y notifica al administrador por correo con botones de rol.
+//  y notifica al administrador por correo con un enlace de aprobación.
 // ============================================================
 require_once __DIR__ . '/config.php';
 
@@ -30,30 +30,35 @@ if ($matricula === '' || $nombre === '' || $correo === '' || $password === '') {
     exit();
 }
 
+if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+    header('Location: registro.php?error=correo');
+    exit();
+}
+
 // Hash seguro de la contraseña
 $password_hash  = password_hash($password, PASSWORD_BCRYPT);
 $rol_temporal   = 'por_asignar';
 $estatus        = 'pendiente';
 
-// Token aleatorio seguro para el enlace de aprobación por correo
+// Token aleatorio seguro y expiración del enlace (7 días)
 $token          = bin2hex(random_bytes(32));
+$token_expira   = date('Y-m-d H:i:s', strtotime('+7 days'));
 
 // $conexion se inicializa en config.php
 $sql  = 'INSERT INTO usuarios
-            (matricula, nombre_completo, email, telefono, password, rol, estatus, token_aprobacion)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+            (matricula, nombre_completo, email, telefono, password, rol, estatus, token_aprobacion, token_expira_en)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 $stmt = $conexion->prepare($sql);
-$stmt->bind_param('ssssssss',
+$stmt->bind_param('sssssssss',
     $matricula, $nombre, $correo, $telefono,
-    $password_hash, $rol_temporal, $estatus, $token
+    $password_hash, $rol_temporal, $estatus, $token, $token_expira
 );
 
 try {
     $stmt->execute();
 
-    // Generar enlaces de aprobación con token seguro
-    $link_empleado = APP_URL . '/aprobar.php?m=' . urlencode($matricula) . '&t=' . $token . '&r=empleado';
-    $link_gerente  = APP_URL . '/aprobar.php?m=' . urlencode($matricula) . '&t=' . $token . '&r=gerencia';
+    // Un solo enlace: el rol se elige después, en el formulario de aprobación.
+    $link_aprobacion = APP_URL . '/aprobar.php?m=' . urlencode($matricula) . '&t=' . $token;
 
     // Notificar al administrador por correo
     $mail = new PHPMailer(true);
@@ -77,28 +82,26 @@ try {
     $mail->Body    = "
         <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto;'>
             <h2 style='color: #0b132b;'>Nueva Solicitud de Cuenta</h2>
-            <p>Se ha registrado un nuevo usuario. Revisa sus datos y asigna su nivel de jerarquía:</p>
+            <p>Revisa los datos y asigna la jerarquía en el formulario de aprobación:</p>
             <ul style='font-size: 16px; line-height: 1.8;'>
                 <li><strong>Matrícula:</strong> " . htmlspecialchars($matricula) . "</li>
                 <li><strong>Nombre:</strong> "    . htmlspecialchars($nombre)    . "</li>
                 <li><strong>Correo:</strong> "    . htmlspecialchars($correo)    . "</li>
                 <li><strong>Teléfono:</strong> "  . htmlspecialchars($telefono)  . "</li>
             </ul>
-            <p style='margin-top: 20px;'>Selecciona el rol para este usuario (el enlace solo puede usarse una vez):</p>
-            <a href='" . $link_empleado . "'
-               style='display:inline-block; padding:12px 20px; background:#22c55e;
-                      color:#fff; text-decoration:none; border-radius:5px;
-                      font-weight:bold; margin-right:10px;'>
-                ✅ Aprobar como EMPLEADO
-            </a>
-            <a href='" . $link_gerente . "'
-               style='display:inline-block; padding:12px 20px; background:#f37021;
-                      color:#fff; text-decoration:none; border-radius:5px; font-weight:bold;'>
-                🔑 Aprobar como GERENTE
-            </a>
+            <p style='margin-top: 20px;'>
+                <a href='" . htmlspecialchars($link_aprobacion, ENT_QUOTES, 'UTF-8') . "'
+                   style='display:inline-block; padding:12px 20px; background:#f37021;
+                          color:#fff; text-decoration:none; border-radius:5px; font-weight:bold;'>
+                    Revisar y aprobar solicitud
+                </a>
+            </p>
+            <p style='font-size:13px; color:#475569;'>
+                El enlace vence en 7 días y solo puede usarse una vez.
+            </p>
         </div>";
 
-    $mail->AltBody = "Nueva solicitud de: $nombre ($matricula). Accede al panel para gestionar la aprobación.";
+    $mail->AltBody = "Nueva solicitud de: $nombre ($matricula). Abre el enlace de aprobación para asignar el rol.";
 
     $mail->send();
 
@@ -110,6 +113,7 @@ try {
     error_log('DB Error: ' . $e->getMessage());
     die('Error en el registro.');
 } catch (Exception $e) {
+    // Si el correo falla, el usuario ya quedó registrado; lo informamos sin exponer detalles internos.
     error_log('PHPMailer Error: ' . $mail->ErrorInfo);
 }
 
