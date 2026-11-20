@@ -38,3 +38,5 @@ jobs:
             **/*.md
             config.php
             config.sample.php
+            setup_orca.ps1
+            setup_orca.sh
