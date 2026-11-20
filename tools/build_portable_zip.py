@@ -28,16 +28,17 @@ EXCLUDED_NAMES = {"config.php", ".DS_Store", "Thumbs.db", "desktop.ini"}
 EXCLUDED_SUFFIXES = {".pyc", ".log", ".tmp", ".zip", ".bak", ".swp"}
 EXCLUDED_PARTS = {"__pycache__", ".venv", "node_modules"}
 
-SECRET_KEYS = ("MAIL_PASS", "DB_PASS", "MAIL_USER", "DB_USER", "DB_NAME", "DB_HOST")
+# Solo contraseñas y tokens se consideran secretos. El correo, el host y la URL
+# son datos de configuración: pueden aparecer en el historial sin filtrar claves.
+SECRET_KEYS = ("MAIL_PASS", "DB_PASS")
 PLACEHOLDERS = {
     "tu_app_password_de_gmail",
     "TU_PASSWORD_VPANEL",
-    "tu_correo@gmail.com",
-    "if0_XXXXXXXX",
-    "if0_XXXXXXXX_judyb",
-    "sqlXXX.infinityfree.com",
-    "tu-dominio.infinityfreeapp.com",
 }
+SECRET_PATTERNS = (
+    rb"ghp_[A-Za-z0-9]{20,}",
+    rb"github_pat_[A-Za-z0-9_]{20,}",
+)
 
 
 def should_include(rel: Path) -> bool:
@@ -88,8 +89,14 @@ def real_secrets() -> list[bytes]:
     return secrets
 
 
+def contains_secret(data: bytes, secrets: list[bytes]) -> bool:
+    return any(secret in data for secret in secrets) or any(
+        re.search(pattern, data) for pattern in SECRET_PATTERNS
+    )
+
+
 def git_history_contains(secrets: list[bytes]) -> bool:
-    if not secrets or not shutil.which("git"):
+    if not (secrets or SECRET_PATTERNS) or not shutil.which("git"):
         return False
     try:
         proc = subprocess.run(
@@ -100,7 +107,7 @@ def git_history_contains(secrets: list[bytes]) -> bool:
         )
     except subprocess.SubprocessError:
         return False
-    return any(secret in proc.stdout for secret in secrets)
+    return contains_secret(proc.stdout, secrets)
 
 
 def build() -> None:
@@ -135,7 +142,7 @@ def build() -> None:
             if info.file_size > 5_000_000:
                 continue
             data = zf.read(info)
-            if any(secret in data for secret in secrets):
+            if contains_secret(data, secrets):
                 raise SystemExit(
                     f"ERROR: se detectó una credencial real dentro de {info.filename}"
                 )
