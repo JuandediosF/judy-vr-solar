@@ -11,10 +11,10 @@ ini_set('display_startup_errors', '0');
 error_reporting(0);
 
 // --- Base de datos InfinityFree (Ver datos en vPanel / MySQL)
-define('DB_HOST', 'sqlXXX.infinityfree.com'); // Host MySQL asignado
-define('DB_USER', 'if0_XXXXXXXX');             // Usuario vPanel
-define('DB_PASS', 'TU_PASSWORD_VPANEL');       // Contraseña de la cuenta
-define('DB_NAME', 'if0_XXXXXXXX_judyb');       // Nombre de BD creada
+define('DB_HOST', 'sql310.infinityfree.com');  // Host MySQL asignado
+define('DB_USER', 'if0_43331816');             // Usuario vPanel
+define('DB_PASS', 'TU_PASSWORD_VPANEL');       // Contraseña de la cuenta (llenar en htdocs)
+define('DB_NAME', 'if0_43331816_JuDyb');       // Nombre de BD del proyecto
 
 // --- Correo (SMTP Gmail con contraseña de aplicación) --------
 define('MAIL_HOST',     'smtp.gmail.com');
