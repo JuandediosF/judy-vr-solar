@@ -43,7 +43,22 @@ En https://github.com/zimmercanoa/judy-simulator-orca/settings/secrets/actions c
 
 Al hacer push a `master`, `.github/workflows/deploy.yml` sincroniza el código por FTP a `htdocs/`, excluyendo `config.php`, `.git`, `.agents`, `.gemini`, `tools`, `gems`, `*.sql` y `*.md`.
 
-## 4. Verificación
+## 4. Asistente virtual (Gemini)
+
+El chatbot (`chatbot.php` + `chat_api.php`) usa Gemini. La clave **nunca** se sube al repo:
+
+1. Obtén una clave en https://aistudio.google.com/app/apikey.
+2. En `config.php` de `htdocs`, añade:
+   ```php
+   define('GEMINI_API_KEY', 'TU_CLAVE_REAL_AQUI');
+   define('GEMINI_MODEL',   'gemini-3.8-flash');
+   ```
+3. Si la clave no está configurada, el chatbot responde de forma segura invitando a usar el formulario de contacto (no se rompe la web).
+4. El modelo se puede cambiar en `GEMINI_MODEL` sin tocar código.
+
+**Privacidad:** el asistente no consulta la base de datos, exige CSRF, limita a 30 mensajes por hora y por sesión, y aplica un filtro de salida que enmascara correos, teléfonos, matrículas y datos de infraestructura. El prompt del sistema prohíbe expresamente revelar información personal.
+
+## 5. Verificación
 
 ```sh
 python tools/judy_monitor.py --url https://judysimulator.wuaze.com

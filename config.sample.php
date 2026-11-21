@@ -26,6 +26,12 @@ define('MAIL_FROM_NAME','JuDy Simulator System');
 // --- URL pública del dominio en InfinityFree ----------------
 define('APP_URL', 'https://judysimulator.wuaze.com');
 
+// --- Chatbot con Gemini (solo servidor; NUNCA exponer al navegador) --
+// Obtén tu clave en https://aistudio.google.com/app/apikey
+// Cámbiala en config.php del servidor por tu clave real.
+define('GEMINI_API_KEY', 'TU_GEMINI_API_KEY');
+define('GEMINI_MODEL',   'gemini-3.8-flash');
+
 // --- Conexión centralizada a la base de datos ---------------
 if (!isset($conexion) || !($conexion instanceof mysqli)) {
     $conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);

@@ -31,6 +31,7 @@ $es_gerencia   = $sesion_activa && ($_SESSION['rol'] ?? '') === 'gerencia';
         <li><a href="index.php">Inicio</a></li>
         <li><a href="avances.php">Avances VR</a></li>
         <li><a href="acerca.php">Acerca de</a></li>
+        <li><a href="chatbot.php">Asistente Virtual</a></li>
         <li><a href="contacto.php">¡Contáctanos!</a></li>
     </ul>
     <div class="navacciones">

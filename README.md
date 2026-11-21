@@ -11,6 +11,7 @@ Plataforma web PHP para capacitación en seguridad industrial con realidad virtu
 - `assets/` — CSS, imágenes y PHPMailer.
 - `GEMINI.md` — reglas obligatorias de producción.
 - `.gemini/commands/` — comandos de auditoría y adaptación a InfinityFree.
+- `chatbot.php` / `chat_api.php` — asistente virtual con Gemini (clave solo en `config.php`; sin acceso a datos personales).
 
 ## Desarrollo local
 
