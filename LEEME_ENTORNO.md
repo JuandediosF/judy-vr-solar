@@ -52,7 +52,7 @@ Resultado esperado: `Skills válidas: 5`, `Estado: SINCRONIZADO` y
 - Comandos Gemini CLI: `/judy:audit`, `/judy:monitor`, `/judy:seguridad`, `/judy:sql`, `/judy:sync`.
 - Para OpenCode u otros agentes: ejecuta directamente `python tools/<script>.py --json`.
 - Antes de cualquier push/FTP: `python tools/judy_audit.py --strict`.
-- Después de desplegar: `python tools/judy_monitor.py --url https://TU-DOMINIO.infinityfreeapp.com`.
+- Después de desplegar: `python tools/judy_monitor.py --url https://judysimulator.wuaze.com`.
 
 ## Despliegue en el nuevo equipo
 

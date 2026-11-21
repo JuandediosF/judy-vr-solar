@@ -24,7 +24,7 @@ define('MAIL_PASS',     'tu_app_password_de_gmail');
 define('MAIL_FROM_NAME','JuDy Simulator System');
 
 // --- URL pública del dominio en InfinityFree ----------------
-define('APP_URL', 'https://tu-dominio.infinityfreeapp.com');
+define('APP_URL', 'https://judysimulator.wuaze.com');
 
 // --- Conexión centralizada a la base de datos ---------------
 if (!isset($conexion) || !($conexion instanceof mysqli)) {

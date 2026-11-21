@@ -26,6 +26,9 @@ Plataforma web PHP para capacitación en seguridad industrial con realidad virtu
 
 ## Despliegue en InfinityFree
 
+**Sitio en producción:** https://judysimulator.wuaze.com — cuenta InfinityFree `if0_43331816`.
+Las credenciales (MySQL/FTP/Gmail) no se versionan; se obtienen en el vPanel y se cargan como GitHub Secrets o en `config.php` del servidor.
+
 1. Crea el subdominio y la base de datos en el vPanel (ej. `if0_XXXXXXX_judyb`).
 2. Importa `JuDyb.sql` desde phpMyAdmin.
 3. Sube todos los archivos a `htdocs` (excepto `config.php`).

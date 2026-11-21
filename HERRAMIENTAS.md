@@ -36,7 +36,7 @@ python tools/judy_gem_sync.py
 python tools/judy_audit.py --strict
 
 # 3. Tras el despliegue
-python tools/judy_monitor.py --url https://TU-DOMINIO.infinityfreeapp.com
+python tools/judy_monitor.py --url https://judysimulator.wuaze.com
 ```
 
 Si un agente no ve un comando:
