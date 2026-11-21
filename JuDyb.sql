@@ -31,15 +31,15 @@ CREATE TABLE `usuarios` (
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
 
--- Usuarios de prueba
--- Contraseña de GER-001 y EMP-001: 12345 (hasheada con bcrypt)
+-- Usuarios de ejemplo (datos genéricos; sin información personal real)
+-- Contraseña de GER-001 y EMP-001: 12345 (hash bcrypt de demostración)
 INSERT INTO `usuarios`
   (`id_usuario`, `matricula`, `nombre_completo`, `email`, `telefono`, `password`, `rol`, `estatus`, `token_aprobacion`, `token_expira_en`)
 VALUES
-  (1, 'GER-001', 'Dilan Rodríguez', NULL, NULL, '$2y$10$hKbh6Fx2Ysb4fWEQN6X9AefLLe9giUQG7.zftDxIen46XJ1yBrVmO', 'gerencia', 'aprobado', NULL, NULL),
-  (2, 'EMP-001', 'Carlos Rivera', NULL, NULL, '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'empleado', 'aprobado', NULL, NULL),
-  (3, '142510685', 'Dilan Israel Rodriguez Cano', 'dilan.cano2025@gmail.com', '4691214870', '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'por_asignar', 'pendiente', NULL, NULL),
-  (4, '142565415', 'Usuario Prueba 2', 'dilan.cano2028@gmail.com', '4691214870', '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'por_asignar', 'pendiente', NULL, NULL);
+  (1, 'GER-001', 'Gerente Ejemplo', 'ejemplo@example.com', '0000000000', '$2y$10$hKbh6Fx2Ysb4fWEQN6X9AefLLe9giUQG7.zftDxIen46XJ1yBrVmO', 'gerencia', 'aprobado', NULL, NULL),
+  (2, 'EMP-001', 'Operador Ejemplo', 'ejemplo@example.com', '0000000000', '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'empleado', 'aprobado', NULL, NULL),
+  (3, 'PEND-001', 'Solicitante Ejemplo 1', 'ejemplo@example.com', '0000000000', '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'por_asignar', 'pendiente', NULL, NULL),
+  (4, 'PEND-002', 'Solicitante Ejemplo 2', 'ejemplo@example.com', '0000000000', '$2y$10$iIAJk9ueUEegycaSBQnLQ.zTIP8VmTlzmUYF1CuIMe7FXQScySX9C', 'por_asignar', 'pendiente', NULL, NULL);
 
 -- -----------------------------------------------------------
 -- Tabla: avances_vr
@@ -57,7 +57,7 @@ CREATE TABLE `avances_vr` (
     FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
     ON DELETE CASCADE
 ) ENGINE=InnoDB
-  AUTO_INCREMENT=5
+  AUTO_INCREMENT=3
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
 
@@ -65,9 +65,7 @@ INSERT INTO `avances_vr`
   (`id_avance`, `id_usuario`, `modulo`, `porcentaje`, `estado`, `retroalimentacion`)
 VALUES
   (1, 2, 'Fase 1: Instalación (NOM-029)', 100, 'Completado', 'Excelente dominio de los procedimientos eléctricos y uso de equipo de protección básico.'),
-  (2, 2, 'Fase 2: Mantenimiento (NOM-009)', 40, 'En Progreso', 'Buen control en altura, reforzar la revisión de líneas de vida antes de ascender.'),
-  (3, 2, 'Fase 1: Instalación (NOM-029)', 100, 'Completado', 'Excelente dominio de los procedimientos eléctricos y uso de equipo de protección básico.'),
-  (4, 2, 'Fase 2: Mantenimiento (NOM-009)', 40, 'En Progreso', 'Buen control en altura, reforzar la revisión de líneas de vida antes de ascender.');
+  (2, 2, 'Fase 2: Mantenimiento (NOM-009)', 40, 'En Progreso', 'Buen control en altura, reforzar la revisión de líneas de vida antes de ascender.');
 
 SET FOREIGN_KEY_CHECKS = 1;
 

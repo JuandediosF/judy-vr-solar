@@ -48,6 +48,7 @@ $es_gerencia   = $sesion_activa && ($_SESSION['rol'] ?? '') === 'gerencia';
         <li><a href="seguimiento.php">Mi Panel</a></li>
         <?php if ($es_gerencia): ?>
             <li><a href="gestionar_usuarios.php" style="color:var(--letras-especiales);">Gestionar Usuarios</a></li>
+            <li><a href="gestionar_avances.php" style="color:var(--letras-especiales);">Gestionar Avances VR</a></li>
         <?php endif; ?>
         <li><a href="contacto.php">Contacto</a></li>
     </ul>

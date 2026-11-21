@@ -69,6 +69,10 @@ $rol_usuario    = $_SESSION['rol'] ?? 'sin_rol';
                    style="color:var(--azul-acento); font-size:14px; display:inline-block; margin-top:10px;">
                     Gestionar autorizaciones &rarr;
                 </a>
+                <a href="gestionar_avances.php"
+                   style="color:var(--azul-acento); font-size:14px; display:inline-block; margin-top:10px;">
+                    Gestionar avances VR &rarr;
+                </a>
             </div>
         </div>
 
