@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "skills": {
+    "gem-sync": {
+      "source": "./.agents/skills",
+      "sourceType": "local",
+      "computedHash": "abe120723748a6abd781aecf98bd8fde6cd685ee878d51b17c65a8264ee089ac",
+      "installMode": "copy"
+    },
+    "infinity-sql": {
+      "source": "./.agents/skills",
+      "sourceType": "local",
+      "computedHash": "9edb877faa636ca2eb2a40c59eac4160352e3acc5527a757c87873698035b1ed",
+      "installMode": "copy"
+    },
+    "predeploy-audit": {
+      "source": "./.agents/skills",
+      "sourceType": "local",
+      "computedHash": "839d0089dd002440729607f36825be5dbd8d44d40dbb030234341eea9b7622db",
+      "installMode": "copy"
+    },
+    "prod-monitor": {
+      "source": "./.agents/skills",
+      "sourceType": "local",
+      "computedHash": "fa7c200112ee01d4cbb12dcae83e1e58b48f4108099815f003651c159c08e2f0",
+      "installMode": "copy"
+    },
+    "seguridad-php": {
+      "source": "./.agents/skills",
+      "sourceType": "local",
+      "computedHash": "7c391c12fecf0232ca2098c8937e67d3f0d955f2b2e30fd36a4e371eb27a6bec",
+      "installMode": "copy"
+    }
+  }
+}
