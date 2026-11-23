@@ -45,7 +45,7 @@ Al hacer push a `master`, `.github/workflows/deploy.yml` sincroniza el código p
 
 ## 4. Asistente virtual (Gemini)
 
-El chatbot (`chatbot.php` + `chat_api.php`) usa Gemini. La clave **nunca** se sube al repo:
+El chatbot (`asistente.php` + `asistente_api.php`) usa Gemini. La clave **nunca** se sube al repo:
 
 1. Obtén una clave en https://aistudio.google.com/app/apikey.
 2. En `config.php` de `htdocs`, añade:
@@ -71,3 +71,7 @@ Esperado: **6/6 endpoints OK** (estado actual). Tras el primer deploy con los se
 - Si compartiste una contraseña en cualquier chat, **rótala** en el vPanel antes de cargarla como secret.
 - Usa contraseña de aplicación de Gmail, nunca la contraseña normal de la cuenta.
 - No pegues credenciales en chats, issues ni commits.
+
+## Restricción de nombres en InfinityFree
+
+InfinityFree responde **403** (redirección a `errors.infinityfree.net/errors/403/`) a cualquier URL cuya ruta contenga `chat` en minúsculas (`chat.php`, `mychat.php`, `chat_api.txt`, `/assets/chat/`…), exista o no el archivo. Por eso el asistente usa `asistente.php` y `asistente_api.php`. No nombres archivos ni carpetas públicas con `chat`.

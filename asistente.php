@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-//  chatbot.php — Asistente virtual con Gemini
+//  asistente.php — Asistente virtual con Gemini
 // ============================================================
 session_start();
 if (empty($_SESSION['csrf_token'])) {
@@ -88,7 +88,7 @@ $csrf_token = $_SESSION['csrf_token'];
         boton.disabled = true;
         var esperando = agregar('chat-bot', 'Escribiendo...');
 
-        fetch('chat_api.php', {
+        fetch('asistente_api.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
             body: 'mensaje=' + encodeURIComponent(mensaje) + '&csrf_token=' + encodeURIComponent(csrf)

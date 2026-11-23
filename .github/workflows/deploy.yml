@@ -36,6 +36,8 @@ jobs:
             gems/**
             **/*.sql
             **/*.md
+            **/*.docx
+            skills-lock.json
             config.php
             config.sample.php
             setup_orca.ps1

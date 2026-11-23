@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-//  chat_api.php — Endpoint del asistente virtual (Gemini)
+//  asistente_api.php — Endpoint del asistente virtual (Gemini)
 //
 //  La clave Gemini vive SOLO en config.php (servidor). Nunca se
 //  envía al navegador. Este endpoint:
